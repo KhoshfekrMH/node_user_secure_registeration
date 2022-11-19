@@ -17,6 +17,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
+app.get("/", function (req,res) {
+    res.render("register.ejs")
+})
+
+app.get("/login", function (req, res) {
+    res.render("login.ejs")
+})
+
 app.listen(3000, function () {
     console.log("Server is running on port 3000")
 })
