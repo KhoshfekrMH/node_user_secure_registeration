@@ -50,7 +50,7 @@ passport.deserializeUser(function (id, done) {
 
 app.route("/")
     .get(function (req, res) {
-        res.render("register");
+        res.render("register", {alertDisplay: "none"});
     })
     .post(function (req, res) {
         const password = req.body.password
@@ -69,7 +69,7 @@ app.route("/")
                 }
             });
         } else {
-            console.log("password is not same!")
+            res.render("register", {alertDisplay: "block"});
             res.redirect("/")
         }
     });
