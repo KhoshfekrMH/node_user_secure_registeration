@@ -74,9 +74,36 @@ app.route("/")
         }
     });
 
-app.get("/login", function (req, res) {
-    res.render("login.ejs")
-})
+app.route("/login")
+    .get(function (req, res) {
+        res.render("login")
+    })
+    .post(function (req, res) {
+        const user = new User ({
+            username: req.body.username,
+            password: req.body.password
+        });
+        req.login(user, function (err) {
+            if(err) {
+                console.log(err)
+            } else {
+                passport.authenticate("local")(req, res, function () {
+                   res.redirect("/accountPage")
+                });
+            }
+        })
+    });
+
+app.get("/accountPage", function (req, res) {
+   res.render("accountPage")
+});
+
+app.post("/logout", function (req, res) {
+    req.logout(function (err) {
+        if(err) {return next(err);}
+        res.redirect("/");
+    });
+});
 
 app.listen(3000, function () {
     console.log("Server is running on port 3000")
